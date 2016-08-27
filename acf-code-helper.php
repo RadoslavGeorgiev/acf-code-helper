@@ -38,7 +38,6 @@ class ACF_Code_Helper {
 	protected function __construct() {
 		include_once( 'class-acf-group-location.php' );
 		include_once( 'class-acf-group.php' );
-		include_once( 'examples.php' );
 
 		add_action( 'after_setup_theme', array( $this, 'initialize' ) );
 	}

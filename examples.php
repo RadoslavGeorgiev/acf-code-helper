@@ -2,6 +2,7 @@
 add_action( 'register_acf_groups', function() {
 	ACF_Group::create( 'page_fields', 'Page Fields' )
 		->add_location_rule( 'post_type', 'page' )
+		->set_attr( 'label_placement', 'left' )
 		->add_fields(array(
 			array(
 				'name'    => 'checkbox_field',

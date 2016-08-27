@@ -1,0 +1,11 @@
+<snippet>
+    <content><![CDATA[
+array(
+    'label' => __( '$1', 'dw' ),
+    'name'  => '${2:${1/([a-zA-Z0-9]+)(?:(\s+?)|\b)/?1:\L$1(?2:_)\E/g}}',
+    'type'  => '${3:text}'$0
+),
+]]></content>
+    <tabTrigger>field</tabTrigger>
+    <scope>source.php</scope>
+</snippet>

@@ -1,5 +1,5 @@
 {
-  "name": "RadoslavGeorgiev/acf-code-helper",
+  "name": "radoslavgeorgiev/acf-code-helper",
   "type": "wordpress-plugin",
   "version": "1.0.0",
   "description": "This is a small helper library, whose purpose is to ease your field creation process when using the Advanced Custom Fields plugin to register fields via PHP.",

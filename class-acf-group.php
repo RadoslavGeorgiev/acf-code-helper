@@ -340,6 +340,8 @@ class ACF_Group {
 		$fields = array();
 
 		foreach( $this->fields as $field ) {
+			# Skip empty or incorrect fields
+			if ( ! isset( $field['name'] ) || ! $field['name'] ) continue;
 			$fields[] = $this->prepare_field( $field );
 		}
 

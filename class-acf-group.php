@@ -136,8 +136,14 @@ class ACF_Group {
 	 * @param mixed  $value The value of the attribute.
 	 * @return ACF_Group
 	 */
-	public function set_attr( $key, $value ) {
-		$this->attributes[ $key ] = $value;
+	public function set_attr( $key, $value = null ) {
+		if( is_array( $key ) ) {
+			foreach( $key as $k => $v ) {
+				$this->attributes[ $k ] = $v;				
+			}
+		} else {
+			$this->attributes[ $key ] = $value;			
+		}
 
 		return $this;
 	}

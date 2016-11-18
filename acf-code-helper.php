@@ -10,13 +10,13 @@
 
 /**
  * Handles the logic behind the plugin.
- * 
+ *
  * @since 0.1.0
  */
 class ACF_Code_Helper {
 	/**
 	 * Creates an instance of the class.
-	 * 
+	 *
 	 * @since 0.1.0
 	 * @var ACF_Code_Helper
 	 */
@@ -39,16 +39,18 @@ class ACF_Code_Helper {
 		include_once( 'class-acf-group-location.php' );
 		include_once( 'class-acf-group.php' );
 
-		add_action( 'after_setup_theme', array( $this, 'initialize' ) );
+		add_action( 'after_setup_theme', array( $this, 'initialize' ), 1000 );
 	}
 
 	/**
 	 * Triggerst he neccessary hooks for initializing fields.
-	 * 
+	 *
 	 * @since 0.1.0
 	 */
 	public function initialize() {
-		do_action( 'register_acf_groups' );
+		if( function_exists( 'acf_add_local_field_group' ) ) {
+			do_action( 'register_acf_groups' );
+		}
 	}
 }
 

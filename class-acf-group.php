@@ -212,7 +212,7 @@ class ACF_Group {
 	 * @param string $prefix A prefix that should be added to the field.
 	 * @return mixed[] Full data about the field.
 	 */
-	protected function prepare_field( $field, $prefix = '' ) {
+	protected function prepare_field( $field, $prefix = '', $parent_key = '' ) {
 		static $defaults;
 
 		if( is_null( $defaults ) ) {
@@ -271,6 +271,15 @@ class ACF_Group {
 						$rule[ 'value' ] = '1';
 					}
 
+                    # "Outside" option for conditional logic inside a repeater
+                    # If set true, the target field will be outside of the repeater
+                    # One level above, on the same level as the repeater field
+                    if ( isset($rule['outside']) && $rule['outside'] && $parent_key ) {
+                        # Removes only the last occurrence of the parent, in case it's present more than one time
+                        $rule['field'] = preg_replace("~$parent_key(?!.*$parent_key)~", '', $rule['field']);
+                        $rule['field'] = str_replace( '__', '_', $rule['field'] );
+                    }
+
 					$rules[] = $rule;
 				}
 
@@ -295,7 +304,9 @@ class ACF_Group {
 				$sub_fields = array();
 
 				foreach( $field[ 'sub_fields' ] as $subfield ) {
-					$sub_fields[] = $this->prepare_field( $subfield, $field[ 'key' ] . '_' );
+                    # Passing the name as a third argument (parent name for the subfield)
+                    # In case it's needed for conditional logic
+					$sub_fields[] = $this->prepare_field( $subfield, $field[ 'key' ] . '_', $field['name'] );
 				}
 
 				$field[ 'sub_fields' ] = $sub_fields;
@@ -335,6 +346,8 @@ class ACF_Group {
 		$fields = array();
 
 		foreach( $this->fields as $field ) {
+			# Skip empty or incorrect fields
+			if ( ! isset( $field['name'] ) || ! $field['name'] ) continue;
 			$fields[] = $this->prepare_field( $field );
 		}
 
